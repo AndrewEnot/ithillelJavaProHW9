@@ -1,6 +1,7 @@
 package homework9;
 
 import java.io.File;
+import java.time.LocalDate;
 
 public class FileLoggerConfiguration {
 
@@ -9,8 +10,8 @@ public class FileLoggerConfiguration {
   private int size;
   private String format;
 
-  public FileLoggerConfiguration(File file, LoggingLevel level, int size, String format) {
-    this.file = file;
+  public FileLoggerConfiguration(LoggingLevel level, int size, String format) {
+    this.file = new File("log_" + level + "_" + LocalDate.now() + ".txt");
     this.level = level;
     this.size = size;
     this.format = format;
