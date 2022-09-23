@@ -6,10 +6,10 @@ public class FileLoggerConfiguration {
 
   private File file;
   private LoggingLevel level;
-  private int size;
+  private long size;
   private String format;
 
-  public FileLoggerConfiguration(File file, LoggingLevel level, int size, String format) {
+  public FileLoggerConfiguration(File file, LoggingLevel level, long size, String format) {
     this.file = file;
     this.level = level;
     this.size = size;
@@ -32,11 +32,11 @@ public class FileLoggerConfiguration {
     this.level = level;
   }
 
-  public int getSize() {
+  public long getSize() {
     return size;
   }
 
-  public void setSize(int size) {
+  public void setSize(long size) {
     this.size = size;
   }
 

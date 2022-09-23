@@ -9,17 +9,21 @@ public class Main {
   public static void main(String[] args) {
 
     FileLoggerConfiguration config = new FileLoggerConfiguration(new File("config.txt"),
-        LoggingLevel.DEBUG, 2048, LocalDateTime.now().format(DateTimeFormatter.ofPattern(
+        LoggingLevel.INFO, 2048, LocalDateTime.now().format(DateTimeFormatter.ofPattern(
         "yyyy-MM-dd HH:mm:ss")));
 
     FileLogger attempt = new FileLogger(config);
-
-    attempt.info("attempt 1");
-    attempt.debug("attempt 2");
-    attempt.info("attempt 3");
-    attempt.info("attempt 4");
-    attempt.debug("attempt 5");
-    attempt.debug("attempt 6");
-
+    try {
+      int i = 0;
+      while (i < 1000){
+      attempt.info("attempt " + i);
+      attempt.debug("attempt " + i);
+      i++;
+      }
+    } catch (FileMaxSizeReachedException e) {
+      System.out.println("Max size: " + config.getSize() + " " + "Free space: " +
+          (config.getSize() - config.getFile().length()) + " " + "Path: " +
+          config.getFile().getAbsolutePath());
+    }
   }
 }

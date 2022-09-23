@@ -12,6 +12,9 @@ public class FileLogger {
   }
 
   void debug(String string) {
+    if (configuration.getFile().length() >= configuration.getSize()) {
+      throw new FileMaxSizeReachedException();
+    }
     LoggingLevel level = LoggingLevel.DEBUG;
     if (string != null) {
       if (configuration.getLevel().priority >= level.priority) {
@@ -26,16 +29,20 @@ public class FileLogger {
   }
 
   void info(String string) {
-    LoggingLevel level = LoggingLevel.INFO;
-    if (string != null) {
-      if (configuration.getLevel().priority >= level.priority) {
-        try (FileWriter writer = new FileWriter(configuration.getFile().getAbsolutePath(), true)) {
-          writer.write(configuration.getFormat() + " " + level + " " + string + "\n");
-          writer.flush();
-        } catch (IOException e) {
-          System.out.println(e.getMessage());
+    if (configuration.getFile().length() >= configuration.getSize()) {
+      throw new FileMaxSizeReachedException();
+    }
+      LoggingLevel level = LoggingLevel.INFO;
+      if (string != null) {
+        if (configuration.getLevel().priority >= level.priority) {
+          try (FileWriter writer = new FileWriter(configuration.getFile().getAbsolutePath(),
+              true)) {
+            writer.write(configuration.getFormat() + " " + level + " " + string + "\n");
+            writer.flush();
+          } catch (IOException e) {
+            System.out.println(e.getMessage());
+          }
         }
       }
     }
   }
-}
