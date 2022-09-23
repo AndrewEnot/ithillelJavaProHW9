@@ -10,8 +10,8 @@ public class FileLoggerConfiguration {
   private int size;
   private String format;
 
-  public FileLoggerConfiguration(LoggingLevel level, int size, String format) {
-    this.file = new File("log_" + level + "_" + LocalDate.now() + ".txt");
+  public FileLoggerConfiguration(String path, LoggingLevel level, int size, String format) {
+    this.file = new File(path, "log_" + level + "_" + LocalDate.now() + ".txt");
     this.level = level;
     this.size = size;
     this.format = format;
@@ -29,23 +29,11 @@ public class FileLoggerConfiguration {
     return level;
   }
 
-  public void setLevel(LoggingLevel level) {
-    this.level = level;
-  }
-
   public int getSize() {
     return size;
   }
 
-  public void setSize(int size) {
-    this.size = size;
-  }
-
   public String getFormat() {
     return format;
-  }
-
-  public void setFormat(String format) {
-    this.format = format;
   }
 }

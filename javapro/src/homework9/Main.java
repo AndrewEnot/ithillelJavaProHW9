@@ -1,22 +1,30 @@
 package homework9;
 
-import static homework9.LoggingLevel.DEBUG;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.io.File;
+import java.util.Random;
 
 public class Main {
 
   public static void main(String[] args) {
 
-    FileLoggerConfiguration config = new FileLoggerConfiguration(DEBUG, 2048,
-        LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+    FileLogger attempt =
+        new FileLogger(FileLoggerConfigurationLoader.load(new File("config.txt")));
 
-    FileLogger attempt = new FileLogger(config);
+    //Block for generation of outer messages
     int i = 0;
+    LoggingLevel level = null;
     while (i < 100) {
-    attempt.info("attempt " + i);
-    attempt.debug("attempt " + i);
-    i++;
+      int j = new Random().nextInt(6);
+      switch (j) {
+        case 0 -> level = LoggingLevel.FATAL;
+        case 1 -> level = LoggingLevel.ERROR;
+        case 2 -> level = LoggingLevel.WARN;
+        case 3 -> level = LoggingLevel.INFO;
+        case 4 -> level = LoggingLevel.DEBUG;
+        case 5 -> level = LoggingLevel.TRACE;
+      }
+      attempt.logging(level, "attempt " + i);
+      i++;
     }
   }
 }
