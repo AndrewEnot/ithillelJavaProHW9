@@ -1,0 +1,7 @@
+FILE: C:\Users\7not9\IdeaProjects\ithillelJavaProHW9\javapro\src\homework9
+
+LEVEL: DEBUG
+
+MAX-SIZE: 2048
+
+FORMAT:  [CURRENT TIME][DEBUG] Message: [STRING - MESSAGE]
