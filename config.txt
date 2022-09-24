@@ -1,4 +1,0 @@
-FILE: C:\Users\7not9\IdeaProjects\ithillelJavaProHW9
-LEVEL: WARN
-MAX-SIZE: 2048
-FORMAT: Time: [TIME] Level: [LEVEL] Message: [MESSAGE]

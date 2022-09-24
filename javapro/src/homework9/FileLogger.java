@@ -29,11 +29,9 @@ public class FileLogger {
       if (configuration.getLevel().priority >= level.priority) {
         try (FileWriter writer = new FileWriter(configuration.getFile().getAbsolutePath(),
             true)) {
-          writer.write(configuration.getFormat().
-              replaceAll("TIME",
-                  LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))).
-              replaceAll("LEVEL", level.toString()).
-              replaceAll("MESSAGE", string) + "\n");
+          String date = LocalDateTime.now().format(DateTimeFormatter.
+              ofPattern("yyyy-MM-dd HH:mm:ss"));
+          writer.write(String.format(configuration.getFormat(), date, level, string));
           writer.flush();
         } catch (IOException e) {
           System.out.println(e.getMessage());
