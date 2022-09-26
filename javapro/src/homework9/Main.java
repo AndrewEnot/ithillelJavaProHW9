@@ -8,22 +8,20 @@ public class Main {
 
   public static void main(String[] args) {
 
-    FileLoggerConfiguration config = new FileLoggerConfiguration(new File("config.txt"),
-        LoggingLevel.INFO, 2048, LocalDateTime.now().format(DateTimeFormatter.ofPattern(
+    FileLoggerConfiguration config = new FileLoggerConfiguration(new File("log.txt"),
+        LoggingLevel.DEBUG, 1024, LocalDateTime.now().format(DateTimeFormatter.ofPattern(
         "yyyy-MM-dd HH:mm:ss")));
 
     FileLogger attempt = new FileLogger(config);
     try {
       int i = 0;
-      while (i < 1000){
-      attempt.info("attempt " + i);
-      attempt.debug("attempt " + i);
-      i++;
+      while (i < 1000) {
+        attempt.info("attempt " + i);
+        attempt.debug("attempt " + i);
+        i++;
       }
     } catch (FileMaxSizeReachedException e) {
-      System.out.println("Max size: " + config.getSize() + " " + "Free space: " +
-          (config.getSize() - config.getFile().length()) + " " + "Path: " +
-          config.getFile().getAbsolutePath());
+      System.out.println(e.getMessage());
     }
   }
 }

@@ -11,9 +11,11 @@ public class FileLogger {
     this.configuration = configuration;
   }
 
-  void debug(String string) {
+  public void debug(String string) {
     if (configuration.getFile().length() >= configuration.getSize()) {
-      throw new FileMaxSizeReachedException();
+      throw new FileMaxSizeReachedException("Max size: " + configuration.getSize() + " " +
+          "Free space: " + (configuration.getSize() - configuration.getFile().length()) + " " +
+          "Path: " + configuration.getFile().getAbsolutePath());
     }
     LoggingLevel level = LoggingLevel.DEBUG;
     if (string != null) {
@@ -28,21 +30,23 @@ public class FileLogger {
     }
   }
 
-  void info(String string) {
+  public void info(String string) {
     if (configuration.getFile().length() >= configuration.getSize()) {
-      throw new FileMaxSizeReachedException();
+      throw new FileMaxSizeReachedException("Max size: " + configuration.getSize() + " " +
+          "Free space: " + (configuration.getSize() - configuration.getFile().length()) + " " +
+          "Path: " + configuration.getFile().getAbsolutePath());
     }
-      LoggingLevel level = LoggingLevel.INFO;
-      if (string != null) {
-        if (configuration.getLevel().priority >= level.priority) {
-          try (FileWriter writer = new FileWriter(configuration.getFile().getAbsolutePath(),
-              true)) {
-            writer.write(configuration.getFormat() + " " + level + " " + string + "\n");
-            writer.flush();
-          } catch (IOException e) {
-            System.out.println(e.getMessage());
-          }
+    LoggingLevel level = LoggingLevel.INFO;
+    if (string != null) {
+      if (configuration.getLevel().priority >= level.priority) {
+        try (FileWriter writer = new FileWriter(configuration.getFile().getAbsolutePath(),
+            true)) {
+          writer.write(configuration.getFormat() + " " + level + " " + string + "\n");
+          writer.flush();
+        } catch (IOException e) {
+          System.out.println(e.getMessage());
         }
       }
     }
   }
+}
