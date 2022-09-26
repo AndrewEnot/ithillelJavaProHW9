@@ -9,14 +9,14 @@ import java.time.format.DateTimeFormatter;
 
 public class FileLogger {
 
-  FileLoggerConfiguration configuration;
-  int index;
+  private FileLoggerConfiguration configuration;
+  private int index;
 
   public FileLogger(FileLoggerConfiguration configuration) {
     this.configuration = configuration;
   }
 
-  void logging(LoggingLevel level, String string) {
+  public void logging(LoggingLevel level, String string) {
 
     //this block create new logfile when the old one is full
     if (configuration.getFile().length() > configuration.getSize()) {
