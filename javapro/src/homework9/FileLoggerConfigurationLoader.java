@@ -9,7 +9,7 @@ import java.util.Properties;
 
 public class FileLoggerConfigurationLoader {
 
-  static FileLoggerConfiguration load(File file) {
+  public static FileLoggerConfiguration load(File file) {
 
     Properties readerA = new Properties();
     try (FileReader reader = new FileReader(file)) {
