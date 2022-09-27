@@ -22,7 +22,7 @@ public class Main {
         case 3 -> level = LoggingLevel.DEBUG;
         case 4 -> level = LoggingLevel.TRACE;
       }
-      attempt.logging(level, "attempt " + i);
+      attempt.logging(level, "attempt" + i);
       i++;
     }
   }

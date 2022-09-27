@@ -18,23 +18,26 @@ public class FileLogger {
 
   public void logging(LoggingLevel level, String string) {
 
-    //this block create new logfile when the old one is full
-    if (configuration.getFile().length() > configuration.getSize()) {
-      index++;
-      configuration.setFile(new File("log_" + configuration.getLevel() + "_" +
-          LocalDate.now() + "_" + index + ".txt"));
-    }
-
     if (string != null) {
-      if (configuration.getLevel().priority >= level.priority) {
-        try (FileWriter writer = new FileWriter(configuration.getFile().getAbsolutePath(),
-            true)) {
-          String date = LocalDateTime.now().format(DateTimeFormatter.
-              ofPattern("yyyy-MM-dd HH:mm:ss"));
-          writer.write(String.format(configuration.getFormat(), date, level, string));
-          writer.flush();
-        } catch (IOException e) {
-          System.out.println(e.getMessage());
+      if (configuration.getLevel() != null) {
+
+        //this block create new logfile when the old one is full
+        if (configuration.getFile().length() > configuration.getSize()) {
+          index++;
+          configuration.setFile(new File("log_" + configuration.getLevel() + "_" +
+              LocalDate.now() + "_" + index + ".txt"));
+        }
+
+        if (configuration.getLevel().priority >= level.priority) {
+          try (FileWriter writer = new FileWriter(configuration.getFile().getAbsolutePath(),
+              true)) {
+            String date = LocalDateTime.now().format(DateTimeFormatter.
+                ofPattern("yyyy-MM-dd HH:mm:ss"));
+            writer.write(String.format(configuration.getFormat(), date, level, string));
+            writer.flush();
+          } catch (IOException e) {
+            System.out.println(e.getMessage());
+          }
         }
       }
     }
