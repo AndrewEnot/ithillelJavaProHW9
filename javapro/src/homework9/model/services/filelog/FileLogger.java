@@ -1,5 +1,7 @@
-package homework9;
+package homework9.model.services.filelog;
 
+import homework9.model.enums.LoggingLevel;
+import homework9.model.api.Stdoutlogger;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -7,7 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class FileLogger {
+public class FileLogger extends Stdoutlogger {
 
   private FileLoggerConfiguration configuration;
   private int index;
@@ -24,15 +26,16 @@ public class FileLogger {
         //this block create new logfile when the old one is full
         if (configuration.getFile().length() > configuration.getSize()) {
           index++;
-          configuration.setFile(new File("log_" + configuration.getLevel() + "_" +
-              LocalDate.now() + "_" + index + ".txt"));
+          configuration.setFile(new File(
+              "log_" + configuration.getLevel() + "_" + LocalDate.now() + "_" +
+                  index + ".txt"));
         }
 
         if (configuration.getLevel().priority >= level.priority) {
           try (FileWriter writer = new FileWriter(configuration.getFile().getAbsolutePath(),
               true)) {
-            String date = LocalDateTime.now().format(DateTimeFormatter.
-                ofPattern("yyyy-MM-dd HH:mm:ss"));
+            String date = LocalDateTime.now()
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             writer.write(String.format(configuration.getFormat(), date, level, string));
             writer.flush();
           } catch (IOException e) {

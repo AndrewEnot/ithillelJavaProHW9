@@ -1,5 +1,10 @@
 package homework9;
 
+
+import static homework9.model.enums.LoggingType.FILE;
+
+import homework9.model.controller.LoggerManager;
+import homework9.model.enums.LoggingLevel;
 import java.io.File;
 import java.util.Random;
 
@@ -7,8 +12,7 @@ public class Main {
 
   public static void main(String[] args) {
 
-    FileLogger attempt =
-        new FileLogger(FileLoggerConfigurationLoader.load(new File("config.properties")));
+    LoggerManager attempt = new LoggerManager(FILE, new File("config.properties"));
 
     //Block for generation of outer messages
     int i = 0;
@@ -22,7 +26,7 @@ public class Main {
         case 3 -> level = LoggingLevel.DEBUG;
         case 4 -> level = LoggingLevel.TRACE;
       }
-      attempt.logging(level, "attempt" + i);
+      attempt.getLogger().logging(level, "attempt" + i);
       i++;
     }
   }

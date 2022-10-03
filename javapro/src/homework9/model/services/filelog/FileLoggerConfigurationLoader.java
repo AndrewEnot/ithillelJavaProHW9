@@ -1,21 +1,29 @@
-package homework9;
+package homework9.model.services.filelog;
 
 import static java.lang.Integer.parseInt;
 
+import homework9.model.api.StdoutLoggerConfigurationLoader;
+import homework9.model.enums.LoggingLevel;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
-public class FileLoggerConfigurationLoader {
+public class FileLoggerConfigurationLoader implements StdoutLoggerConfigurationLoader {
+
+  private FileLoggerConfiguration configuration;
+
+  public FileLoggerConfigurationLoader(FileLoggerConfiguration configuration) {
+    this.configuration = configuration;
+  }
 
   public static FileLoggerConfiguration load(File file) {
     if (file.length() == 0) {
       return new FileLoggerConfiguration(
           null,
           null,
-          -1,
-          null);
+          null,
+          -1);
     }
     Properties config = new Properties();
     try (FileReader reader = new FileReader(file)) {
@@ -25,11 +33,10 @@ public class FileLoggerConfigurationLoader {
       throw new RuntimeException(e);
     }
     return new FileLoggerConfiguration(
-        config.getProperty("FILE"),
         LoggingLevel.valueOf(config.getProperty("LEVEL")),
-        parseInt(config.getProperty("SIZE")),
-        config.getProperty("FORMAT"));
-
+        config.getProperty("FORMAT"),
+        config.getProperty("FILE"),
+        parseInt(config.getProperty("SIZE")));
   }
 }
 

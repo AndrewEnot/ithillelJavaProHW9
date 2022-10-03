@@ -1,4 +1,4 @@
-package homework9;
+package homework9.model.enums;
 
 public enum LoggingLevel {
 
@@ -8,7 +8,7 @@ public enum LoggingLevel {
   DEBUG(3),
   TRACE(4);
 
-  final int priority;
+  public final int priority;
 
   LoggingLevel(int priority) {
     this.priority = priority;
